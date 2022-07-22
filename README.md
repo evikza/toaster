@@ -1,7 +1,7 @@
 # toaster
 Hi, there! 👋 This's a dead simple ~~library~~ script toast notifications. Based on Javascript.
 
-[Demo 🚀](https://evikza.github.io/toaster/example/)
+[Demo](https://evikza.github.io/toaster/example/) 🚀
 
 ## Install
 #### It's easy:
