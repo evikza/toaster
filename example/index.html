@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dead simple toaster 🍞</title>
+
+    <link rel="stylesheet" href="toaster.min.css" />
+  </head>
+  <body>
+    <div class="page">
+      <div class="helpler-header">
+        <h3>Dead simple toaster 🍞</h3>
+      </div>
+      <div class="helpler-remote-control-container">
+        <button class="add-toast">Add `toast`</button>
+        <button class="delete-all-toast">Delete all `toast`</button>
+      </div>
+    </div>
+    <script src="toaster.min.js"></script>
+
+    <script>
+      const toast = new toaster({ selector: '.toaster' });
+
+      document
+        .querySelector('.add-toast')
+        .addEventListener('click', async () => {
+          const toastTypeList = [
+            {
+              type: 'default',
+              text: 'All product questions and issues should be directes to help@gmail.com.',
+            },
+            {
+              type: 'info',
+              text: 'Connection timed out. Showing limited messages.',
+            },
+            { type: 'success', text: 'Thanks for filling out our form.' },
+            {
+              type: 'warning',
+              text: "We're running into some difficulties connecting to JIRA rigth now.",
+            },
+            {
+              type: 'error',
+              text: 'Please wait a few minutes before you try again.',
+            },
+          ];
+
+          function onceByArray(array) {
+            return array[(array.length * Math.random()) | 0];
+          }
+
+          const onceToast = onceByArray(toastTypeList);
+
+          toast[onceToast.type](onceToast.text);
+        });
+
+      document
+        .querySelector('.delete-all-toast')
+        .addEventListener('click', () => {
+          toast.clear();
+        });
+    </script>
+  </body>
+</html>
