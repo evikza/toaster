@@ -2,17 +2,21 @@ const toaster = function (config) {
   this.config = config;
 
   this.options = {
+    selector: '.toaster',
     toasterContainerSelector: '.toaster-container',
-    timeout: 3_400,
-    position: [],
+    timeout: 4_400,
+    position: ['bottom', 'right'],
+    priority: '',
+    once: 0,
+    unsafe: 1,
   };
 
   this.properties = {
-    default: ['#f5f5f5', '#818182'],
+    default: [],
     info: [],
-    success: ['#d1e7dd', '#155724'],
-    warning: ['#fff3cd', '#664d03'],
-    error: ['#f8d7da', '#842029'],
+    success: [],
+    warning: [],
+    error: [],
   };
 
   this.config = Object.assign(
@@ -21,57 +25,56 @@ const toaster = function (config) {
     this.config
   );
 
-  for (let [key] of Object.entries(this.config.dialogType)) {
-    this[key] = function (text = '', toastType = key) {
-      return this.createToaster(text, toastType);
+  for (let [priority] of Object.entries(this.config.dialogType)) {
+    this[priority] = function (text) {
+      this.config.priority = priority;
+
+      return this.createToast(text);
     };
   }
 
-  this.createToaster = function (text, toastType) {
-    this.createToasterWrapper();
-
-    let [backgroundColor, color] = this.config.dialogType[toastType];
+  this.createToast = function (text) {
+    this.createToaster();
 
     this.createElement(
       {
-        className: this.concatClassList([
+        className: this.concat().classList([
           this.config.selector,
           'active',
-          `toaster-${toastType}`,
+          `toaster-${this.config.priority}`,
         ]),
-        innerText: text,
+        innerText: this.escapeHTML(text),
         role: 'alert',
-        'aria-live': 'assertive',
       },
       this.config.toasterContainerSelector,
       function (toast, self) {
+        if (!self.config.timeout) {
+          return;
+        }
+
         setTimeout(function () {
           toast.remove();
 
           if (!self.hasActiveToasts()) {
-            self.clear();
+            self.clear().all();
           }
         }, self.config.timeout);
       }
     );
   };
 
-  this.createToasterWrapper = function () {
-    let toasterWrapper = this.selector('All')(
-      this.config.toasterContainerSelector
-    );
+  this.createToaster = function () {
+    let toaster = this.selector('All')(this.config.toasterContainerSelector);
 
-    if (toasterWrapper.length) {
+    if (toaster.length) {
       return;
     }
 
     this.createElement(
       {
-        className: this.concatClassList([
-          this.config.toasterContainerSelector,
-          'bottom',
-          'right',
-        ]),
+        className: this.concat().classList(
+          [this.config.toasterContainerSelector].concat(this.config.position)
+        ),
       },
       'body'
     );
@@ -88,23 +91,48 @@ const toaster = function (config) {
   };
 
   this.clear = function () {
-    let toasters = this.selector('All')(this.config.toasterContainerSelector);
+    this.all = function () {
+      let toasters = this.selector('All')(this.config.toasterContainerSelector);
 
-    if (!toasters.length) {
-      return;
-    }
+      if (!toasters.length) {
+        return;
+      }
 
-    for (let toaster of [...toasters]) {
-      toaster.remove();
-    }
+      for (let toaster of [...toasters]) {
+        toaster.remove();
+      }
+    };
+
+    return this;
   };
 
   this.hasActiveToasts = function () {
     return this.selector('All')(this.config.selector).length ? !0 : !1;
   };
 
-  this.concatClassList = function (classList) {
-    return classList.map((e) => e.replace(/[\.]/g, '')).join(' ');
+  this.concat = function () {
+    this.classList = function (classList) {
+      return classList
+        .map(function (iterator) {
+          return iterator.replace(/[\.]/g, '');
+        })
+        .join(' ');
+    };
+
+    return this;
+  };
+
+  this.escapeHTML = function (unsafeText) {
+    if (this.config.unsafe) {
+      return unsafeText;
+    }
+
+    return unsafeText
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
   };
 
   this.selector = function (suffix = '') {
