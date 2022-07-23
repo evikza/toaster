@@ -5,31 +5,55 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dead simple toaster 🍞</title>
-
+    
     <link rel="stylesheet" href="toaster.min.css" />
   </head>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-size: 0.875em;
+      font-family: 'Roboto Mono', monospace;
+    }
+
+    input,
+    button,
+    textarea {
+      font-family: inherit;
+      text-transform: uppercase;
+    }
+  </style>
   <body>
     <div class="page">
       <div class="helpler-header">
-        <h3>Dead simple toaster 🍞</h3>
+        <h3>Dead simple toaster</h3>
       </div>
-      <div class="helpler-remote-control-container">
-        <button class="add-toast">Add `toast`</button>
-        <button class="delete-all-toast">Delete all `toast`</button>
+      <div class="helpler-container">
+        <button class="add-toast">Add</button>
+        <button class="delete-last-toast" disabled>Delete last</button>
+        <button class="delete-all-toast">Delete all</button>
+      </div>
+      <div class="helpler-page-content">
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
       </div>
     </div>
     <script src="toaster.min.js"></script>
-
     <script>
-      const toast = new toaster({ selector: '.toaster' });
+      const toast = new toaster({
+        selector: '.toaster',
+      });
 
       document
         .querySelector('.add-toast')
-        .addEventListener('click', function () {
+        .addEventListener('click', async () => {
           const toastTypeList = [
             {
               type: 'default',
-              text: 'All product questions and issues should be directes to help@gmail.com.',
+              text: "You've been away for awhile now, so we logged you out.",
             },
             {
               type: 'info',
@@ -45,11 +69,9 @@
               text: 'Please wait a few minutes before you try again.',
             },
           ];
-
           function onceByArray(array) {
             return array[(array.length * Math.random()) | 0];
           }
-
           const onceToast = onceByArray(toastTypeList);
 
           toast[onceToast.type](onceToast.text);
@@ -58,7 +80,7 @@
       document
         .querySelector('.delete-all-toast')
         .addEventListener('click', () => {
-          toast.clear();
+          toast.clear().all();
         });
     </script>
   </body>
