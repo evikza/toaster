@@ -1,10 +1,13 @@
 .toaster-container {
-  position: absolute;
-  width: max-content;
+  position: fixed;
   max-width: 100%;
   padding: 1rem;
   z-index: 14;
-  pointer-events: none;
+}
+
+.toaster-container.center {
+  left: 50%;
+  transform: translate(-50%);
 }
 
 .toaster-container.top {
@@ -25,10 +28,8 @@
 
 .toaster {
   width: 350px;
-  max-width: 350px;
   margin: 0.4em 0 0.4em 0;
   padding: 0.8em;
-  background: aliceblue;
   border-radius: 0.2em;
   box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.04);
 }
@@ -39,7 +40,7 @@
 }
 
 .toaster-info {
-  background: #323232;
+  background: #585858;
   color: #ffffff;
 }
 
@@ -56,4 +57,13 @@
 .toaster-error {
   background: #fdeded;
   color: #5f2120;
+}
+
+@media (max-width: 43em) {
+  .toaster-container {
+    width: 100%;
+  }
+  .toaster {
+    width: 100%;
+  }
 }
