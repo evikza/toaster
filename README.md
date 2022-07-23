@@ -25,16 +25,19 @@ toast.error('Please wait a few minutes before you try again.');
 | -------------|:------------------:|
 | default  | ``` toast.default()``` |
 | info     | ``` toast.info()```    |
-| warning  | ```toast.warning()```  |
 | success  | ```toast.success()```  |
+| warning  | ```toast.warning()```  |
 | error  | ```toast.error()```  |
 
 ### Options
 
 ```js
-new toaster({ selector: '.toaster', timeout: 5000 });
-
-
+new toaster({
+  selector: '.toaster',
+  timeout: 5000,
+  position: ['bottom', 'right'],
+  unsafe: 1,
+});
 ```
 
 ## Version
