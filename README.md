@@ -16,7 +16,7 @@ Hi, there! 👋 This's a dead simple ~~library~~ script toast notifications. Bas
 #### … and initialize the script:
 
 ```js
-const toast = new toaster({ selector: '.toaster' });
+const toast = new toaster();
 
 toast.error('Please wait a few minutes before you try again.');
 ```
