@@ -24,4 +24,4 @@ function css() {
     .pipe(dest('release'));
 }
 
-exports.default = series([js, css]);
+exports.test = series([js, css]);
