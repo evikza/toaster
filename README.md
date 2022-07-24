@@ -1,11 +1,11 @@
 # toaster
 Hi, there! 👋 This's a dead simple ~~library~~ script toast notifications. Based on Javascript.
 
-[![Build Status](https://app.travis-ci.com/evikza/toaster.svg?branch=main)](https://app.travis-ci.com/evikza/toaster)
+[![Build Status](https://app.travis-ci.com/evikza/toaster.svg?branch=main)](https://app.travis-ci.com/evikza/toaster) ![GitHub file size in bytes](https://img.shields.io/github/size/evikza/toaster/src/toaster.min.js)
 
 ## Try
 
-[Demo](https://evikza.github.io/toaster/example/) 🚀
+[Demo](https://evikza.github.io/toaster/example/) 🚀 
 
 ## Install
 #### It's easy:
