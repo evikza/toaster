@@ -3,6 +3,8 @@ Hi, there! 👋 This's a dead simple ~~library~~ script toast notifications. Bas
 
 [![Build Status](https://app.travis-ci.com/evikza/toaster.svg?branch=main)](https://app.travis-ci.com/evikza/toaster)
 
+## Try
+
 [Demo](https://evikza.github.io/toaster/example/) 🚀
 
 ## Install
